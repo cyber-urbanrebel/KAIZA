@@ -1,5 +1,6 @@
 "use client";
 
+import { use } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { useState } from "react";
@@ -12,9 +13,10 @@ import ProductImage from "@/components/ProductImage";
 export default function ProductDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const product = getProductById(params.id);
+  const { id } = use(params);
+  const product = getProductById(id);
   if (!product) notFound();
 
   const { addItem, toggleCart } = useCart();
